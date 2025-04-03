@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Meal Planner</title>
+  <style>
+    body { text-align: center; font-family: Arial; }
+    input { padding: 5px; width: 200px; }
+    button { padding: 5px; }
+    #result { margin: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Meal Planner</h1>
+  <input id="ingredients" placeholder="Type ingredients (e.g., chicken, rice)">
+  <br>
+  <button onclick="generateMeal()">Get Meal</button>
+  <div id="result"></div>
+  <script>
+    const recipes = [
+      { name: "Chicken Rice", ingredients: ["chicken", "rice"] },
+      { name: "Egg Toast", ingredients: ["egg", "bread"] },
+      { name: "Pasta Sauce", ingredients: ["pasta", "tomato"] }
+    ];
+
+    function generateMeal() {
+      let input = document.getElementById("ingredients").value.toLowerCase().split(",");
+      let userItems = input.map(item => item.trim());
+      let result = document.getElementById("result");
+      let match = null;
+
+      for (let recipe of recipes) {
+        if (recipe.ingredients.every(ing => userItems.includes(ing))) {
+          match = recipe;
+          break;
+        }
+      }
+
+      if (match) {
+        result.innerHTML = "<h3>" + match.name + "</h3><p>All set!</p>";
+      } else {
+        result.innerHTML = "<p>No match. Try again!</p>";
+      }
+    }
+  </script>
+</body>
+</html>
