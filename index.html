@@ -11,6 +11,7 @@
 </head>
 <body>
   <h1>Meal Planner</h1>
+  <p>Get 20+ recipes for $2! Email: [your-email]</p>
   <input id="ingredients" placeholder="Type ingredients (e.g., chicken, rice)">
   <br>
   <button onclick="generateMeal()">Get Meal</button>
@@ -23,13 +24,20 @@
     ];
 
     function generateMeal() {
-      let input = document.getElementById("ingredients").value.toLowerCase().split(",");
-      let userItems = input.map(item => item.trim());
+      let input = document.getElementById("ingredients").value.toLowerCase();
+      let userItems = input.split(",").map(item => item.trim().replace(/\s+/g, " "));
       let result = document.getElementById("result");
       let match = null;
 
       for (let recipe of recipes) {
-        if (recipe.ingredients.every(ing => userItems.includes(ing))) {
+        let hasAll = true;
+        for (let ing of recipe.ingredients) {
+          if (!userItems.includes(ing)) {
+            hasAll = false;
+            break;
+          }
+        }
+        if (hasAll) {
           match = recipe;
           break;
         }
